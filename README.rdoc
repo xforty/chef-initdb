@@ -1,0 +1,132 @@
+= DESCRIPTION:
+
+Executes specified actions on a database server.  This is a concrete
+cookbook for Opscode's (({database})) cookbook.  Meaning, you can use
+this cookbook to actually execute actions defined in the (({database}))
+cookbook.  You could always create a site-specific cookbook to handle
+this, but this is a simple enough abstraction that can be re-used.
+
+= REQUIREMENTS:
+
+* Opscode's (({database}) cookbook - http://community.opscode.com/cookbooks/database/
+
+= ATTRIBUTES:
+
+There are no default attributes for this cookbook. Database and user
+commands are executed by specifying attributes for the node.
+
+= USAGE:
+
+All the options from the (({database})) cookbook are available here.
+They are passed directly on when the (({database})) cookbook is called.
+See the (({database}))[http://community.opscode.com/cookbooks/database]
+documentation for more info on the options that are optional and have
+default values or those that require specific formats.
+
+All actions are contained inside the ((*:initdb*)) hash.
+
+Multiple ((*provider*)) hash's can be specified if you need to connect
+to multiple database servers.  For example, if one database needs to
+be initialized in MySQL and another one in PostgreSQL.  Specify the
+((*provider*)) using one of these symbols: (({:mysql})),
+(({:postgresql})), or (({sqlserver})).
+
+The ((*:connection*)) parameters are used for both the executed database
+and user actions.  If you want to use different parameters, just define
+another ((*provider*)) hash inside (({:initdb})).
+
+  :connection => {
+    :host     => "",
+    :password => "",
+    :port     => "",
+    :username => ""
+  }
+
+Place your database definitions in the ((*:databases*)) hash.
+
+  :databases => {
+    "[database_name]" => {
+      :action           => "",
+      :connection_limit => "",
+      :encoding         => "",
+      :owner            => "",
+      :sql              => "",
+      :tablespace       => "",
+      :template         => ""
+    }
+  }
+
+Place your database user definitions in the ((*:users*)) hash.
+
+  :users => {
+    "[username]" => {
+      :action        => "",
+      :database_name => "",
+      :host          => "",
+      :password      => "",
+      :privileges    => { },
+      :table         => ""
+    }
+  }
+
+= EXAMPLE:
+
+Create a database, create a user, and grant all privileges to the user
+for the specified database in a MySQL server:
+
+  :initdb => {
+    :mysql => {
+      :connection => {
+        :username => "root",
+        :password => "root_pw",
+        :host     => "localhost"
+      },
+      :databases => {
+        "my_test_db" => {
+          :action => :create
+        }
+      },
+      :users => {
+        "test_user" => {
+          :action        => :grant,
+          :database_name => "my_test_db",
+          :host          => "localhost",
+          :password      => "secret_pw"
+        }
+      }
+    }
+  }
+
+The USAGE blocks from above displayed together:
+
+  :initdb => {
+    [provider_symbol] => {
+      :connection => {
+        :host     => "",
+        :password => "",
+        :port     => "",
+        :username => ""
+      },
+      :databases => {
+        "[database_name]" => {
+          :action           => "",
+          :connection_limit => "",
+          :encoding         => "",
+          :owner            => "",
+          :sql              => "",
+          :tablespace       => "",
+          :template         => ""
+        }
+      },
+      :users => {
+        "[username]" => {
+          :action        => "",
+          :database_name => "",
+          :host          => "",
+          :password      => "",
+          :privileges    => { },
+          :table         => ""
+        }
+      }
+    }
+  }
