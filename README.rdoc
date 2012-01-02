@@ -33,7 +33,7 @@ All actions are contained inside the +:initdb+ hash.
 
 Multiple provider hashes can be specified if you need to connect
 to multiple database servers.  Specify the provider using one of
-these symbols: +:mysql+, +:postgresql+, or +:sqlserver+.
+these symbols: *+:mysql+*, *+:postgresql+*, or *+:sqlserver+*.
 
   :initdb => {
     :mysql => {
