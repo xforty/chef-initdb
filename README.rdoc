@@ -1,14 +1,14 @@
 = DESCRIPTION:
 
 Executes specified actions on a database server.  This is a concrete
-cookbook for Opscode's (({database})) cookbook.  Meaning, you can use
-this cookbook to actually execute actions defined in the (({database}))
+cookbook for Opscode's +database+ cookbook.  Meaning, you can use
+this cookbook to actually execute actions defined in the +database+
 cookbook.  You could always create a site-specific cookbook to handle
 this, but this is a simple enough abstraction that can be re-used.
 
 = REQUIREMENTS:
 
-* Opscode's (({database}) cookbook - http://community.opscode.com/cookbooks/database/
+* {Opscode's +database+ cookbook}[http://community.opscode.com/cookbooks/database/]
 
 = ATTRIBUTES:
 
@@ -17,23 +17,23 @@ commands are executed by specifying attributes for the node.
 
 = USAGE:
 
-All the options from the (({database})) cookbook are available here.
-They are passed directly on when the (({database})) cookbook is called.
-See the (({database}))[http://community.opscode.com/cookbooks/database]
-documentation for more info on the options that are optional and have
-default values or those that require specific formats.
+All the options from the +database+ cookbook are available here.
+They are passed directly on when the +database+ cookbook is called.
+See the {+database+ documentation}[http://community.opscode.com/cookbooks/database]
+for more info on the options that are optional and have default
+values or those that require specific formats.
 
-All actions are contained inside the ((*:initdb*)) hash.
+All actions are contained inside the +:initdb+ hash.
 
-Multiple ((*provider*)) hash's can be specified if you need to connect
+Multiple provider hash's can be specified if you need to connect
 to multiple database servers.  For example, if one database needs to
 be initialized in MySQL and another one in PostgreSQL.  Specify the
-((*provider*)) using one of these symbols: (({:mysql})),
-(({:postgresql})), or (({sqlserver})).
+provider using one of these symbols: +:mysql+, +:postgresql+, or
++:sqlserver+.
 
-The ((*:connection*)) parameters are used for both the executed database
+The +:connection+ parameters are used for both the executed database
 and user actions.  If you want to use different parameters, just define
-another ((*provider*)) hash inside (({:initdb})).
+another provider hash inside +:initdb+.
 
   :connection => {
     :host     => "",
@@ -42,7 +42,7 @@ another ((*provider*)) hash inside (({:initdb})).
     :username => ""
   }
 
-Place your database definitions in the ((*:databases*)) hash.
+Place your database definitions in the +:databases+ hash.
 
   :databases => {
     "[database_name]" => {
@@ -56,7 +56,7 @@ Place your database definitions in the ((*:databases*)) hash.
     }
   }
 
-Place your database user definitions in the ((*:users*)) hash.
+Place your database user definitions in the +:users+ hash.
 
   :users => {
     "[username]" => {
@@ -97,7 +97,7 @@ for the specified database in a MySQL server:
     }
   }
 
-The USAGE blocks from above displayed together:
+The *USAGE* blocks from above displayed together:
 
   :initdb => {
     [provider_symbol] => {
