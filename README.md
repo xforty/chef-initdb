@@ -25,105 +25,107 @@ All the options from the `database` cookbook are available here. Those
 options are passed directly on to the `database` cookbook. See the
 [database documentation](http://community.opscode.com/cookbooks/database)
 for more info on the options that are optional and have default
-values or those that require specific formats.
+values or those that require specific formats. All hash keys are strings.
+All hash values are either strings or integers.
 
 All actions are contained inside the `initdb` hash.
 
-    :initdb => {
-      [provider1] => { },
+    'initdb' => {
+      <provider1> => { },
       [provider2] => { },
       [provider3] => { }
     }
 
 Multiple provider hashes can be specified if you need to connect
-to multiple database servers.  Specify the provider using one of
-these symbols: `:mysql`, `:postgresql`, or `:sqlserver`.
+to multiple database servers.  Specify the provider using
+`mysql`, `postgresql`, or `sqlserver`.
 
-    :initdb => {
-      :mysql => {
-        :connection => { },
-        :databases  => { },
-        :users      => { }
+    'initdb' => {
+      'mysql' => {
+        'connection' => { },
+        'databases'  => { },
+        'users'      => { }
       },
-      :postgresql => {
-        :connection => { },
-        :databases  => { },
-        :users      => { }
+      'postgresql' => {
+        'connection' => { },
+        'databases'  => { },
+        'users'      => { }
       },
-      :sqlserver => {
-        :connection => { },
-        :databases  => { },
-        :users      => { }
+      'sqlserver' => {
+        'connection' => { },
+        'databases'  => { },
+        'users'      => { }
       }
     }
 
-The `:connection` parameters are used for both the executed database
-and user actions.  If you want to use different parameters, just define
-another provider hash inside `:initdb`.
+By default, the `connection` parameters are used for both the executed database
+and user actions.  If you want to use different connection parameters for the
+user actions, just define another provider hash inside `initdb`. For example,
+you can have multiple `mysql` provider hashes defined within `initdb`.
 
-    :connection => {
-      :host     => "",
-      :password => "",
-      :port     => "",
-      :username => ""
+    'connection' => {
+      'host'     => '',
+      'password' => '',
+      'port'     => '',
+      'username' => ''
     }
 
-Place your database definitions in the `:databases` hash.
+Place your database definitions in the `databases` hash.
 
-    :databases => {
-      "[database_name]" => {
-        :action           => "",
-        :connection_limit => "",
-        :encoding         => "",
-        :owner            => "",
-        :sql              => "",
-        :tablespace       => "",
-        :template         => ""
+    'databases' => {
+      '<database_name>' => {
+        'action'           => '',
+        'connection_limit' => '',
+        'encoding'         => '',
+        'owner'            => '',
+        'sql'              => '',
+        'tablespace'       => '',
+        'template'         => ''
       }
     }
 
-Place your database user definitions in the `:users` hash.
+Place your database user definitions in the `users` hash.
 
-    :users => {
-      "[username]" => {
-        :action        => "",
-        :database_name => "",
-        :host          => "",
-        :password      => "",
-        :privileges    => { },
-        :table         => ""
+    'users' => {
+      '<username>' => {
+        'action'        => '',
+        'database_name' => '',
+        'host'          => '',
+        'password'      => '',
+        'privileges'    => { },
+        'table'         => ''
       }
     }
 
 The Usage blocks from above displayed together:
 
-    :initdb => {
-      [provider_symbol] => {
-        :connection => {
-          :host     => "",
-          :password => "",
-          :port     => "",
-          :username => ""
+    'initdb' => {
+      '<provider>' => {
+        'connection' => {
+          'host'     => '',
+          'password' => '',
+          'port'     => '',
+          'username' => ''
         },
-        :databases => {
-          "[database_name]" => {
-            :action           => "",
-            :connection_limit => "",
-            :encoding         => "",
-            :owner            => "",
-            :sql              => "",
-            :tablespace       => "",
-            :template         => ""
+        'databases' => {
+          '<database_name>' => {
+            'action'           => '',
+            'connection_limit' => '',
+            'encoding'         => '',
+            'owner'            => '',
+            'sql'              => '',
+            'tablespace'       => '',
+            'template'         => ''
           }
         },
-        :users => {
-          "[username]" => {
-            :action        => "",
-            :database_name => "",
-            :host          => "",
-            :password      => "",
-            :privileges    => { },
-            :table         => ""
+        'users' => {
+          '<username>' => {
+            'action'        => '',
+            'database_name' => '',
+            'host'          => '',
+            'password'      => '',
+            'privileges'    => { },
+            'table'         => ''
           }
         }
       }
@@ -134,24 +136,24 @@ The Usage blocks from above displayed together:
 Create a database, create a user, and grant all privileges to the user
 for the specified database in a MySQL server:
 
-    :initdb => {
-      :mysql => {
-        :connection => {
-          :username => "root",
-          :password => "root_pw",
-          :host     => "localhost"
+    'initdb' => {
+      'mysql' => {
+        'connection' => {
+          'username' => 'root',
+          'password' => 'root_pw',
+          'host'     => 'localhost'
         },
-        :databases => {
-          "my_test_db" => {
-            :action => :create
+        'databases' => {
+          'my_test_db' => {
+            'action' => 'create'
           }
         },
-        :users => {
-          "test_user" => {
-            :action        => :grant,
-            :database_name => "my_test_db",
-            :host          => "localhost",
-            :password      => "secret_pw"
+        'users' => {
+          'test_user' => {
+            'action'        => 'grant',
+            'database_name' => 'my_test_db',
+            'host'          => 'localhost',
+            'password'      => 'secret_pw'
           }
         }
       }

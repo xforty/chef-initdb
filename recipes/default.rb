@@ -20,53 +20,61 @@
 include_recipe "database"
 
 providers = {
-  :mysql => {
-    :database => Chef::Provider::Database::Mysql,
-    :user     => Chef::Provider::Database::MysqlUser
+  'mysql' => {
+    'database' => Chef::Provider::Database::Mysql,
+    'user'     => Chef::Provider::Database::MysqlUser
   },
-  :postgresql => {
-    :database => Chef::Provider::Database::Postgresql,
-    :user     => Chef::Provider::Database::PostgresqlUser
+  'postgresql' => {
+    'database' => Chef::Provider::Database::Postgresql,
+    'user'     => Chef::Provider::Database::PostgresqlUser
   },
-  :sqlserver => {
-    :database => Chef::Provider::Database::SqlServer,
-    :user     => Chef::Provider::Database::SqlServerUser
+  'sqlserver' => {
+    'database' => Chef::Provider::Database::SqlServer,
+    'user'     => Chef::Provider::Database::SqlServerUser
   }
 }
 
-if node.has_key?(:initdb)
+if node.has_key?('initdb')
   # execute provider actions
-  node[:initdb].each do |db_provider_symbol,db_provider|
+  node['initdb'].each do |db_provider_key,db_provider|
+
+    # make sure connection hash is keyed by symbols
+    db_connection = {
+      :host     => db_provider['connection']['host'],
+      :port     => db_provider['connection']['port'],
+      :username => db_provider['connection']['username'],
+      :password => db_provider['connection']['password']
+    }
 
     # execute database actions
-    if db_provider.has_key?(:databases)
-      db_provider[:databases].each do |db_name,db|
+    if db_provider.has_key?('databases')
+      db_provider['databases'].each do |db_name,db|
         database db_name do
-          action           db[:action]
-          connection       db_provider[:connection]
-          connection_limit db[:connection_limit]
-          encoding         db[:encoding]
-          owner            db[:owner]
-          provider         providers[:"#{db_provider_symbol}"][:database]
-          sql              db[:sql]
-          tablespace       db[:tablespace]
-          template         db[:template]
+          action           db['action'].to_sym
+          connection       db_connection
+          connection_limit db['connection_limit']
+          encoding         db['encoding']
+          owner            db['owner']
+          provider         providers[db_provider_key]['database']
+          sql              db['sql']
+          tablespace       db['tablespace']
+          template         db['template']
         end
       end
     end
     
     # execute user actions
-    if db_provider.has_key?(:users)
-      db_provider[:users].each do |db_username,db_user|
+    if db_provider.has_key?('users')
+      db_provider['users'].each do |db_username,db_user|
         database_user db_username do
-          action        db_user[:action]
-          connection    db_provider[:connection]
-          database_name db_user[:database_name]
-          host          db_user[:host]
-          password      db_user[:password]
-          privileges    db_user[:privileges]
-          provider      providers[:"#{db_provider_symbol}"][:user]
-          table         db_user[:table]
+          action        db_user['action'].to_sym
+          connection    db_connection
+          database_name db_user['database_name']
+          host          db_user['host']
+          password      db_user['password']
+          privileges    db_user['privileges']
+          provider      providers[db_provider_key]['user']
+          table         db_user['table']
         end
       end
     end
