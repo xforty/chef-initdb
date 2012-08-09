@@ -1,6 +1,6 @@
 chef-initdb
 ===========
-version 1.0.x - [changelog](https://github.com/xforty/chef-initdb/blob/master/CHANGELOG.md)
+version 1.0.0 - [changelog](https://github.com/xforty/chef-initdb/blob/master/CHANGELOG.md)
 
 ### Description
 
@@ -13,11 +13,11 @@ can be re-used.
 
 ### Requirements
 
-* See [metadata.rb](https://github.com/xforty/chef-initdb/blob/master/metadata.rb)
+See [metadata.rb](https://github.com/xforty/chef-initdb/blob/master/metadata.rb)
 
 ### Attributes
 
-* None
+None
 
 ### Usage
 
