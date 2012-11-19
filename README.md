@@ -1,6 +1,6 @@
 chef-initdb
 ===========
-version 1.0.0 - [changelog](https://github.com/xforty/chef-initdb/blob/master/CHANGELOG.md)
+version 1.0.1 - [changelog](https://github.com/xforty/chef-initdb/blob/master/CHANGELOG.md)
 
 ### Description
 
