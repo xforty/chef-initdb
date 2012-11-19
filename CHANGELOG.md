@@ -1,6 +1,10 @@
 chef-initdb changelog
 =====================
 
+### 1.0.1 (November 19, 2012)
+
+  * Pin database cookbook dependency to version 1.3.2 [GH-1]
+
 ### 1.0.0 (August 9, 2012)
 
   * Started using git-flow for development
