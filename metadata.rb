@@ -1,3 +1,4 @@
+name             "initdb"
 maintainer       "xforty technologies"
 maintainer_email "dking@xforty.com"
 license          "Apache 2.0"
